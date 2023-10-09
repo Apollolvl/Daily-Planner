@@ -1,5 +1,5 @@
-let button = $('button')
-
+let textarea = $('textarea')
+let currentDay = $('#currentDay')
 
 $(document).ready(function() {
   $(".container-lg px-5").wrapAll("<div class='wrapper'></div>");
@@ -8,16 +8,23 @@ $(document).ready(function() {
 
 $(function () {
   $('button').on('click', function() {
-    // Code to execute when the button is clicked
+    let inputValue = $(textarea).val()
     console.log('button was clicked')
+    $(inputValue).ready(function() {
+      if (localStorage.getItem('input')) {
+        const data = localStorage.getItem("textarea");
+        console.log(data); 
+        $('textarea').text(inputValue)
+      } else {
+        localStorage.setItem('input', JSON.stringify(inputValue));
+      }
+    });
   });
-  // TODO: Add a listener for click events on the save button. This code should
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" id of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
-  //
+
+  const currentDate = dayjs().format('MMM DD, YYYY');
+  const currentTime = dayjs().format('hh:mm:ss A');
+  $('#currentDay').text(currentTime, currentDate)
+
   // TODO: Add code to apply the past, present, or future class to each time
   // block by comparing the id to the current hour. HINTS: How can the id
   // attribute of each time-block be used to conditionally add or remove the
